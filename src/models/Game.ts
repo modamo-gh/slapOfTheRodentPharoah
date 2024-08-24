@@ -92,9 +92,95 @@ export default class Game {
 			this.players[i].hand = hands[i];
 		}
 
-		while(!this.players.some(player => player.hand.length === this.cardsInPlay)){
-			console.log()
-		}
+		let currentPlayerIndex = Math.floor(
+			Math.random() * this.players.length
+		);
 
+		while (
+			!this.players.some(
+				(player) => player.hand.length === this.cardsInPlay
+			)
+		) {
+			const currentPlayer = this.players[currentPlayerIndex];
+
+			if (this.discardPile.length) {
+				switch (this.discardPile[this.discardPile.length - 1].value) {
+					case "J":
+						for (let i = 0; i < 1; i++) {
+							const playerCard = currentPlayer.placeCard();
+
+							if (playerCard) {
+								this.discardPile.push(playerCard);
+								console.log(
+									`${currentPlayer.name} played a ${playerCard.value} of ${playerCard.suit}`
+								);
+							}
+						}
+						break;
+
+					case "Q":
+						for (let i = 0; i < 2; i++) {
+							const playerCard = currentPlayer.placeCard();
+
+							if (playerCard) {
+								this.discardPile.push(playerCard);
+								console.log(
+									`${currentPlayer.name} played a ${playerCard.value} of ${playerCard.suit}`
+								);
+							}
+						}
+						break;
+
+					case "K":
+						for (let i = 0; i < 3; i++) {
+							const playerCard = currentPlayer.placeCard();
+
+							if (playerCard) {
+								this.discardPile.push(playerCard);
+								console.log(
+									`${currentPlayer.name} played a ${playerCard.value} of ${playerCard.suit}`
+								);
+							}
+						}
+						break;
+
+					case "A":
+						for (let i = 0; i < 4; i++) {
+							const playerCard = currentPlayer.placeCard();
+
+							if (playerCard) {
+								this.discardPile.push(playerCard);
+								console.log(
+									`${currentPlayer.name} played a ${playerCard.value} of ${playerCard.suit}`
+								);
+							}
+						}
+						break;
+
+					default:
+						const playerCard = currentPlayer.placeCard();
+
+						if (playerCard) {
+							this.discardPile.push(playerCard);
+							console.log(
+								`${currentPlayer.name} played a ${playerCard.value} of ${playerCard.suit}`
+							);
+						}
+						break;
+				}
+			}
+			else{
+				const playerCard = currentPlayer.placeCard();
+
+						if (playerCard) {
+							this.discardPile.push(playerCard);
+							console.log(
+								`${currentPlayer.name} played a ${playerCard.value} of ${playerCard.suit}`
+							);
+						}
+			}
+
+			currentPlayerIndex = (currentPlayerIndex + 1) % this.players.length;
+		}
 	};
 }
