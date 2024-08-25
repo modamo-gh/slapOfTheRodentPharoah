@@ -103,6 +103,11 @@ export default class Game {
 		) {
 			const currentPlayer = this.players[currentPlayerIndex];
 
+			let previousPlayerIndex =
+				currentPlayerIndex - 1 < 0
+					? this.players.length - 1
+					: currentPlayerIndex - 1;
+
 			if (this.discardPile.length) {
 				switch (this.discardPile[this.discardPile.length - 1].value) {
 					case "J":
@@ -116,6 +121,11 @@ export default class Game {
 								);
 							}
 						}
+
+						this.players[previousPlayerIndex].claimDiscardPile(
+							this.discardPile
+						);
+						this.discardPile = [];
 						break;
 
 					case "Q":
@@ -129,6 +139,11 @@ export default class Game {
 								);
 							}
 						}
+
+						this.players[previousPlayerIndex].claimDiscardPile(
+							this.discardPile
+						);
+						this.discardPile = [];
 						break;
 
 					case "K":
@@ -142,6 +157,11 @@ export default class Game {
 								);
 							}
 						}
+
+						this.players[previousPlayerIndex].claimDiscardPile(
+							this.discardPile
+						);
+						this.discardPile = [];
 						break;
 
 					case "A":
@@ -155,6 +175,11 @@ export default class Game {
 								);
 							}
 						}
+
+						this.players[previousPlayerIndex].claimDiscardPile(
+							[...this.discardPile]
+						);
+						this.discardPile = [];
 						break;
 
 					default:
@@ -168,16 +193,15 @@ export default class Game {
 						}
 						break;
 				}
-			}
-			else{
+			} else {
 				const playerCard = currentPlayer.placeCard();
 
-						if (playerCard) {
-							this.discardPile.push(playerCard);
-							console.log(
-								`${currentPlayer.name} played a ${playerCard.value} of ${playerCard.suit}`
-							);
-						}
+				if (playerCard) {
+					this.discardPile.push(playerCard);
+					console.log(
+						`${currentPlayer.name} played a ${playerCard.value} of ${playerCard.suit}`
+					);
+				}
 			}
 
 			currentPlayerIndex = (currentPlayerIndex + 1) % this.players.length;

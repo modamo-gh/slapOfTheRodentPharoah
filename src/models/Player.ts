@@ -9,6 +9,10 @@ export default class Player {
 		this.hand = [];
 	}
 
+	claimDiscardPile = (discardPile: Card[]) => {
+		this.hand = discardPile.reverse().concat(this.hand);
+	}
+
 	placeCard = (): Card | undefined => {
 		return this.hand.pop();
 	};
